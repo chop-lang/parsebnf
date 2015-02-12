@@ -7,6 +7,7 @@ synopsis:            EBNF -> AST parser
 -- description:         
 homepage:            https://github.com/chop-lang/parsebnf
 -- license:             
+license:             MIT
 license-file:        LICENSE
 author:              Carter Hinsley
 maintainer:          carterhinsley@gmail.com
