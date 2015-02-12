@@ -3,7 +3,7 @@
 
 name:                parsebnf
 version:             0.0.1.0
-synopsis:            EBNF -> AST parser
+synopsis:            Extended Backus-Naur Form to JSON AST parser
 -- description:         
 homepage:            https://github.com/chop-lang/parsebnf
 -- license:             
