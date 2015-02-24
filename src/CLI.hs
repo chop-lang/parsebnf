@@ -4,5 +4,5 @@ import Data.List
 import System.Environment
 
 myGetArgs :: IO String
-myGetArgs = fmap (intercalate " ") getArgs
+myGetArgs = fmap unwords getArgs
 
