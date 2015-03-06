@@ -1,7 +1,7 @@
 -- Parsebnf EBNF Parser Generator
 -- Main.hs
 
-import Parsebnf.CLI
+import CLI
 
 main = do
     putStrLn =<< myGetArgs
