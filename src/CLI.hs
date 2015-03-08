@@ -1,6 +1,6 @@
 {-|
 Module      : CLI
-Description : Command line evocation argument processing
+Description : Command-line evocation argument processing
 Copyright   : (c) chop-lang, 2015
 License     : MIT
 Maintainer  : carterhinsley@gmail.com
