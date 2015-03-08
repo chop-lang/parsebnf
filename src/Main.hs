@@ -7,8 +7,8 @@ Maintainer  : carterhinsley@gmail.com
 -}
 module Main where
 
-import CLI
+import qualified CLI
 
 main = do
-    putStrLn =<< myGetArgs
+    CLI.evalArgs
 

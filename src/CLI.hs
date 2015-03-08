@@ -7,9 +7,10 @@ Maintainer  : carterhinsley@gmail.com
 -}
 module CLI where
 
-import Data.List
-import System.Environment
+import System.Environment (getArgs)
 
-myGetArgs :: IO String
-myGetArgs = fmap unwords getArgs
+evalArgs :: IO [()]
+evalArgs = do
+    args <- getArgs
+    mapM putStrLn args
 
