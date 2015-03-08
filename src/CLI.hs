@@ -9,6 +9,7 @@ module CLI where
 
 import System.Environment (getArgs)
 
+-- | Evaluate command-line arguments
 evalArgs :: IO [()]
 evalArgs = do
     args <- getArgs
