@@ -29,5 +29,5 @@ data Token = TContainer ContainerType Token
            | TTerminal Terminal
            deriving (Show)
 
-data AST = AST [Token] deriving (Show)
+type AST = [Token]
 
