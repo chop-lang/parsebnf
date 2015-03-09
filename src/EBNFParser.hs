@@ -7,6 +7,7 @@ Maintainer  : carterhinsley@gmail.com
 -}
 module EBNFParser where
 
+import Data.Char (isAlpha, isSpace)
 import Data.Text (Text(..))
 import qualified Data.Text as Text
 
@@ -43,7 +44,7 @@ parse ebnf@(x:xs)
                             : parse xs
     | x == '-'              = TTerminal (TermExclude)
                             : parse xs
-    | {- ADD -}             = TTerminal (TermIdentifier {- ADD -})
+    | isAlpha x             = TTerminal (TermIdentifier {- ADD -})
                             : {- ADD -}
     | x == '?'              = TTerminal (TermSpecial {- ADD -})
                             : {- ADD -}
@@ -54,5 +55,7 @@ parse ebnf@(x:xs)
                                   else TContainer Group {- ADD -}
     | x == '['              = TContainer Option {- ADD -}
     | x == '{'              = TContainer Repetition {- ADD -}
+    | isSpace x             = parse xs
+    | otherwise             = error $ "Invalid character '" ++ [x] ++ "'."
 parse [] = []
 
