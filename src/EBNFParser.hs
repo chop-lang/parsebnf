@@ -31,3 +31,28 @@ data Token = TContainer ContainerType Token
 
 type AST = [Token]
 
+parse :: String -> AST
+parse ebnf@(x:xs)
+    | x == '|'              = TTerminal (TermAlt)
+                            : parse xs
+    | x == ','              = TTerminal (TermComma)
+                            : parse xs
+    | x == ';' || x == '.'  = TTerminal (TermEnd)
+                            : parse xs
+    | x == '='              = TTerminal (TermEquals)
+                            : parse xs
+    | x == '-'              = TTerminal (TermExclude)
+                            : parse xs
+    | {- ADD -}             = TTerminal (TermIdentifier {- ADD -})
+                            : {- ADD -}
+    | x == '?'              = TTerminal (TermSpecial {- ADD -})
+                            : {- ADD -}
+    | x == '"' || x == '\'' = TTerminal (TermString {- ADD -})
+                            : {- ADD -}
+    | x == '('              = if head xs == '*'
+                                  then parse {- ADD -}
+                                  else TContainer Group {- ADD -}
+    | x == '['              = TContainer Option {- ADD -}
+    | x == '{'              = TContainer Repetition {- ADD -}
+parse [] = []
+
