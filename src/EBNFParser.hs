@@ -7,6 +7,9 @@ Maintainer  : carterhinsley@gmail.com
 -}
 module EBNFParser where
 
+import Data.Text (Text(..))
+import qualified Data.Text as Text
+
 data ContainerType = Group
                    | Option
                    | Repetition
