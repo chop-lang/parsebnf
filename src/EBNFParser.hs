@@ -12,7 +12,7 @@ module EBNFParser where
 import Data.Char (isAlpha, isSpace)
 import qualified Data.List as List (findIndex)
 import Data.Maybe (fromMaybe)
-import Data.Text as Text
+import Data.Text
 
 data ContainerType = Group
                    | Option
@@ -37,14 +37,14 @@ type AST = [Token]
 
 splitOnFirst :: Text -> Text -> (Text, Text)
 splitOnFirst needle haystack =
-    case Text.splitAt location haystack of
-        (xs, ys) -> (xs, Text.drop (Text.length needle) ys)
+    case Data.Text.splitAt location haystack of
+        (xs, ys) -> (xs, Data.Text.drop (Data.Text.length needle) ys)
   where location :: Int
         location =
             fromMaybe ( error $ "No occurence of '"
                               ++ unpack needle
                               ++ "' found." )
-                      . List.findIndex (needle `Text.isPrefixOf`)
+                      . List.findIndex (needle `Data.Text.isPrefixOf`)
                       . tails
                       $ haystack
 
@@ -62,7 +62,7 @@ parse ebnf@(x:xs)
                                                        . pack
                                                        $ xs
                                    in TTerminal (TermSpecial content)
-                                    : parse rest
+                                    : (parse . unpack $ rest)
                             '(' -> if head xs == '*'
                                         then parse
                                            . snd
