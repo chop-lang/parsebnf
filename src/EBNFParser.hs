@@ -55,7 +55,11 @@ parse ebnf@(x:xs)
     | isAlpha x      = let identifier = pack . takeWhile isAlphaNum $ ebnf
                        in (TTerminal $ TermIdentifier identifier)
                         : (parse . drop (Data.Text.length identifier) $ ebnf)
---    | x `elem` "\"'" = TTerminal (TermString {- ADD -}) : {- ADD -}
+    | x `elem` "\"'" = let (content, rest) = splitOnFirst (pack [x])
+                                           . pack
+                                           $ xs
+                       in (TTerminal $ TermString content)
+                        : (parse . unpack $ rest)
     | x `elem` ";."  = TTerminal (TermEnd) : parse xs
     | otherwise = case x of '|' -> TTerminal TermAlt     : parse xs
                             ',' -> TTerminal TermComma   : parse xs
@@ -64,7 +68,7 @@ parse ebnf@(x:xs)
                             '?' -> let (content, rest) = splitOnFirst "?"
                                                        . pack
                                                        $ xs
-                                   in TTerminal (TermSpecial content)
+                                   in (TTerminal $ TermSpecial content)
                                     : (parse . unpack $ rest)
 --                            '(' -> if head xs == '*'
 --                                        then parse
