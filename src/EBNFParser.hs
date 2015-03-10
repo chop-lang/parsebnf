@@ -51,8 +51,8 @@ splitOnFirst needle haystack =
 parse :: String -> AST
 parse ebnf@(x:xs)
     | isSpace x      = parse xs
-    | isAlpha x      = TTerminal (TermIdentifier {- ADD -}) : {- ADD -}
-    | x `elem` "\"'" = TTerminal (TermString {- ADD -}) : {- ADD -}
+--    | isAlpha x      = TTerminal (TermIdentifier {- ADD -}) : {- ADD -}
+--    | x `elem` "\"'" = TTerminal (TermString {- ADD -}) : {- ADD -}
     | x `elem` ";."  = TTerminal (TermEnd) : parse xs
     | otherwise = case x of '|' -> TTerminal TermAlt     : parse xs
                             ',' -> TTerminal TermComma   : parse xs
@@ -63,14 +63,14 @@ parse ebnf@(x:xs)
                                                        $ xs
                                    in TTerminal (TermSpecial content)
                                     : (parse . unpack $ rest)
-                            '(' -> if head xs == '*'
-                                        then parse
-                                           . snd
-                                           . splitOnFirst "*)"
-                                           $ xs
-                                        else TContainer Group {- ADD -} : {- ADD -}
-                            '[' -> TContainer Option {- ADD -} : {- ADD -}
-                            '{' -> TContainer Repetition {- ADD -} : {- ADD -}
+--                            '(' -> if head xs == '*'
+--                                        then parse
+--                                           . snd
+--                                           . splitOnFirst "*)"
+--                                           $ xs
+--                                        else TContainer Group {- ADD -} : {- ADD -}
+--                            '[' -> TContainer Option {- ADD -} : {- ADD -}
+--                            '{' -> TContainer Repetition {- ADD -} : {- ADD -}
                             _   -> error $ "Invalid character '" ++ [x] ++ "'."
 parse [] = []
 
