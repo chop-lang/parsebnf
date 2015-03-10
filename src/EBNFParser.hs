@@ -7,9 +7,12 @@ Maintainer  : carterhinsley@gmail.com
 -}
 module EBNFParser where
 
+{-# LANGUAGE OverloadedStrings #-}
+
 import Data.Char (isAlpha, isSpace)
-import Data.Text (Text(..))
-import qualified Data.Text as Text
+import qualified Data.List as List (findIndex)
+import Data.Maybe (fromMaybe)
+import Data.Text as Text
 
 data ContainerType = Group
                    | Option
@@ -32,6 +35,19 @@ data Token = TContainer ContainerType Token
 
 type AST = [Token]
 
+splitOnFirst :: Text -> Text -> (Text, Text)
+splitOnFirst needle haystack =
+    case Text.splitAt location haystack of
+        (xs, ys) -> (xs, Text.drop (Text.length needle) ys)
+  where location :: Int
+        location =
+            fromMaybe ( error $ "No occurence of '"
+                              ++ unpack needle
+                              ++ "' found." )
+                      . List.findIndex (needle `Text.isPrefixOf`)
+                      . tails
+                      $ haystack
+
 parse :: String -> AST
 parse ebnf@(x:xs)
     | isSpace x      = parse xs
@@ -42,12 +58,19 @@ parse ebnf@(x:xs)
                             ',' -> TTerminal TermComma   : parse xs
                             '=' -> TTerminal TermEquals  : parse xs
                             '-' -> TTerminal TermExclude : parse xs
-                            '?' -> TTerminal (TermSpecial {- ADD -}) : {- ADD -}
+                            '?' -> let (content, rest) = splitOnFirst "?"
+                                                       . pack
+                                                       $ xs
+                                   in TTerminal (TermSpecial content)
+                                    : parse rest
                             '(' -> if head xs == '*'
-                                        then parse {- ADD -}
-                                        else TContainer Group {- ADD -}
-                            '[' -> TContainer Option {- ADD -}
-                            '{' -> TContainer Repetition {- ADD -}
+                                        then parse
+                                           . snd
+                                           . splitOnFirst "*)"
+                                           $ xs
+                                        else TContainer Group {- ADD -} : {- ADD -}
+                            '[' -> TContainer Option {- ADD -} : {- ADD -}
+                            '{' -> TContainer Repetition {- ADD -} : {- ADD -}
                             _   -> error $ "Invalid character '" ++ [x] ++ "'."
 parse [] = []
 
