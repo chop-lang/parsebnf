@@ -5,9 +5,9 @@ Copyright   : (c) chop-lang, 2015
 License     : MIT
 Maintainer  : carterhinsley@gmail.com
 -}
+{-# LANGUAGE OverloadedStrings #-}
 module EBNFParser where
 
-{-# LANGUAGE OverloadedStrings #-}
 
 import Data.Char (isAlpha, isSpace)
 import qualified Data.List as List (findIndex)
