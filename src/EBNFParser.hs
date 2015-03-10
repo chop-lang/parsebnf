@@ -9,10 +9,11 @@ Maintainer  : carterhinsley@gmail.com
 module EBNFParser where
 
 
-import Data.Char (isAlpha, isSpace)
+import Data.Char (isAlpha, isAlphaNum, isSpace)
 import qualified Data.List as List (findIndex)
 import Data.Maybe (fromMaybe)
-import Data.Text
+import Data.Text hiding (drop, length, takeWhile)
+import qualified Data.Text
 
 data ContainerType = Group
                    | Option
@@ -51,7 +52,9 @@ splitOnFirst needle haystack =
 parse :: String -> AST
 parse ebnf@(x:xs)
     | isSpace x      = parse xs
---    | isAlpha x      = TTerminal (TermIdentifier {- ADD -}) : {- ADD -}
+    | isAlpha x      = let identifier = pack . takeWhile isAlphaNum $ ebnf
+                       in (TTerminal $ TermIdentifier identifier)
+                        : (parse . drop (Data.Text.length identifier) $ ebnf)
 --    | x `elem` "\"'" = TTerminal (TermString {- ADD -}) : {- ADD -}
     | x `elem` ";."  = TTerminal (TermEnd) : parse xs
     | otherwise = case x of '|' -> TTerminal TermAlt     : parse xs
