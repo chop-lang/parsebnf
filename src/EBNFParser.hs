@@ -61,23 +61,24 @@ parse ebnf@(x:xs)
                        in (TTerminal $ TermString content)
                         : (parse . unpack $ rest)
     | x `elem` ";."  = TTerminal (TermEnd) : parse xs
-    | otherwise = case x of '|' -> TTerminal TermAlt     : parse xs
-                            ',' -> TTerminal TermComma   : parse xs
-                            '=' -> TTerminal TermEquals  : parse xs
-                            '-' -> TTerminal TermExclude : parse xs
-                            '?' -> let (content, rest) = splitOnFirst "?"
-                                                       . pack
-                                                       $ xs
-                                   in (TTerminal $ TermSpecial content)
-                                    : (parse . unpack $ rest)
---                            '(' -> if head xs == '*'
---                                        then parse
---                                           . snd
---                                           . splitOnFirst "*)"
---                                           $ xs
---                                        else TContainer Group {- ADD -} : {- ADD -}
---                            '[' -> TContainer Option {- ADD -} : {- ADD -}
---                            '{' -> TContainer Repetition {- ADD -} : {- ADD -}
-                            _   -> error $ "Invalid character '" ++ [x] ++ "'."
+    | otherwise =
+          case x of '|' -> TTerminal TermAlt     : parse xs
+                    ',' -> TTerminal TermComma   : parse xs
+                    '=' -> TTerminal TermEquals  : parse xs
+                    '-' -> TTerminal TermExclude : parse xs
+                    '?' -> let (content, rest) = splitOnFirst "?"
+                                               . pack
+                                               $ xs
+                           in (TTerminal $ TermSpecial content)
+                            : (parse . unpack $ rest)
+--                    '(' -> if head xs == '*'
+--                                then parse
+--                                   . snd
+--                                   . splitOnFirst "*)"
+--                                   $ xs
+--                                else TContainer Group {- ADD -} : {- ADD -}
+--                    '[' -> TContainer Option {- ADD -} : {- ADD -}
+--                    '{' -> TContainer Repetition {- ADD -} : {- ADD -}
+                    _   -> error $ "Invalid character '" ++ [x] ++ "'."
 parse [] = []
 
