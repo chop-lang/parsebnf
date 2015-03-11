@@ -75,6 +75,7 @@ parse ebnf@(x:xs)
 --                                then parse
 --                                   . snd
 --                                   . splitOnFirst "*)"
+--                                   . tail
 --                                   $ xs
 --                                else TContainer Group {- ADD -} : {- ADD -}
 --                    '[' -> TContainer Option {- ADD -} : {- ADD -}
