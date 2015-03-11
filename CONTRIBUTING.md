@@ -5,7 +5,8 @@
 * Fork parsebnf
 * Make one commit for every change you make. Do not try to sneak in
   extra changes.
-* Prefix your commits like so (you may join tags as in `(refactor|doc) Change documentation conventions`):
+* Prefix your commits like so (you may join tags as in `(refactor|doc)
+  Change documentation conventions`):
   * (nocompile) Add partially-implemented code
   * (feature) Add a new feature
   * (fix) Fixed inconsistent tests
