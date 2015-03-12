@@ -41,6 +41,10 @@ data Token = TContainer ContainerType AST
 
 type AST = [Token]
 
+-- | Returns a tuple containing 2 text values: one containing all the text
+-- occurring before the first occurence of the needle value in the haystack
+-- value, and another containing all the text occuring after that first needle
+-- occurence.
 splitOnFirst :: Text -> Text -> (Text, Text)
 splitOnFirst needle haystack =
     case Data.Text.splitAt location haystack of
@@ -54,6 +58,9 @@ splitOnFirst needle haystack =
                       . tails
                       $ haystack
 
+-- | Retrieve the contents of the container that the supplied EBNF string
+-- begins with. Obviously, the supplied EBNF string must begin with a container
+-- opening character ('(', '[', '{', etc.).
 getTokenContents :: String -> String
 getTokenContents haystack@(x:xs) =
     let opening = x
@@ -86,11 +93,16 @@ getTokenContents haystack@(x:xs) =
                  ++ [closing]
                  ++ "'." 
 
+-- | Generate a tuple containing an AST generated from the string contained
+-- within a container item (group, option, repetition, etc.) and the rest of
+-- the string containing the EBNF. Argument must begin with a container-opening
+-- character ('(', '[', '{', etc.).
 parseContainer :: String -> (AST, String)
 parseContainer haystack =
     let contents = getTokenContents haystack
     in (parse contents, drop ((+2) . length $ contents) haystack)
 
+-- | Generate an AST of the supplied string containing an EBNF.
 parse :: String -> AST
 parse ebnf@(x:xs)
     | isSpace x      = parse xs
