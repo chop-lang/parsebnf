@@ -7,12 +7,8 @@ Maintainer  : carterhinsley@gmail.com
 -}
 {-# LANGUAGE OverloadedStrings #-}
 module EBNFParser
-( ContainerType(..)
-, Terminal(..)
-, Token(..)
-, AST
-, parse
-)where
+( parse
+) where
 
 import Data.Char (isAlpha, isAlphaNum, isSpace)
 import qualified Data.List as List (findIndex)
