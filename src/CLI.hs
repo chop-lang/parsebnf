@@ -12,11 +12,13 @@ module CLI
 
 import System.Environment (getArgs)
 
+-- | Contains data gathered from command-line arguments
 data ArgResult = ParseData { ebnfFile :: IO String
                            , input :: IO String
                            }
 
--- | Process command-line arguments
+-- | Retrieve command-line arguments, evaluate them, then wrap them back up in
+-- the IO monad.
 processArgs :: IO [ArgResult]
 processArgs = do
     args <- getArgs
@@ -24,6 +26,8 @@ processArgs = do
         then error "You must supply an EBNF file. RTFM for more info."
         else return . evalArgs $ args
 
+-- | Evaluate arguments and return some ArgResults containing information about
+-- the arguments.
 evalArgs :: [String] -> [ArgResult]
 evalArgs [filePath] =
     [ ParseData { ebnfFile = readFile filePath
