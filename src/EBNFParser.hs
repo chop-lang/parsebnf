@@ -7,7 +7,11 @@ Maintainer  : carterhinsley@gmail.com
 -}
 {-# LANGUAGE OverloadedStrings #-}
 module EBNFParser
-( parse
+( ContainerType(..)
+, Terminal(..)
+, Token(..)
+, AST
+, parse
 ) where
 
 import Data.Char (isAlpha, isAlphaNum, isSpace)
