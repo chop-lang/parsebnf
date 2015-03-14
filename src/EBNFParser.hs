@@ -26,6 +26,7 @@ data Terminal = TermAlt
               | TermEnd
               | TermEquals
               | TermExclude
+              | TermMultiple
               | TermIdentifier Text
               | TermSpecial Text
               | TermString Text
@@ -112,10 +113,11 @@ parse ebnf@(x:xs)
                         : (parse . unpack $ rest)
     | x `elem` ";."  = TTerminal (TermEnd) : parse xs
     | otherwise =
-          case x of '|' -> TTerminal TermAlt     : parse xs
-                    ',' -> TTerminal TermComma   : parse xs
-                    '=' -> TTerminal TermEquals  : parse xs
-                    '-' -> TTerminal TermExclude : parse xs
+          case x of '|' -> TTerminal TermAlt      : parse xs
+                    ',' -> TTerminal TermComma    : parse xs
+                    '=' -> TTerminal TermEquals   : parse xs
+                    '-' -> TTerminal TermExclude  : parse xs
+                    '+' -> TTerminal TermMultiple : parse xs
                     '?' -> let (content, rest) = splitOnFirst "?"
                                                . pack
                                                $ xs
