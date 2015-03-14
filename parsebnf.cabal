@@ -23,6 +23,7 @@ executable parsebnf
                        EBNFParser,
                        StreamIO
   -- other-extensions:    
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base ==4.7.*,
+                       text ==1.2.*
   hs-source-dirs:      src
   default-language:    Haskell2010
