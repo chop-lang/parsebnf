@@ -14,7 +14,7 @@ module EBNFParser
 , parse
 ) where
 
-import Data.Char (isAlpha, isAlphaNum, isSpace)
+import Data.Char (isAlpha, isAlphaNum, isNumber, isSpace)
 import qualified Data.List as List (findIndex)
 import Data.Maybe (fromMaybe)
 import Data.Text hiding (drop, head, length, tail, takeWhile)
@@ -31,6 +31,7 @@ data Terminal = TermAlt
               | TermEquals
               | TermExclude
               | TermMultiple
+              | TermNumber Text
               | TermIdentifier Text
               | TermSpecial Text
               | TermString Text
@@ -107,8 +108,11 @@ parseContainer haystack =
 parse :: String -> AST
 parse ebnf@(x:xs)
     | isSpace x      = parse xs
+    | isNumber x     = let number = pack . takeWhile isNumber $ ebnf 
+                       in (TTerminal . TermNumber $ number)
+                        : (parse . drop (Data.Text.length number) $ ebnf)
     | isAlpha x      = let identifier = pack . takeWhile isAlphaNum $ ebnf
-                       in (TTerminal $ TermIdentifier identifier)
+                       in (TTerminal . TermIdentifier $ identifier)
                         : (parse . drop (Data.Text.length identifier) $ ebnf)
     | x `elem` "\"'" = let (content, rest) = splitOnFirst (pack [x])
                                            . pack
