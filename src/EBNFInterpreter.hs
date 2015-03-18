@@ -29,7 +29,7 @@ type IRAlternation = [IRToken]
 
 type IRContent = [IRAlternation]
 
-type IRToken = (Text, IRContent)
+type IRForm = (Text, IRContent)
 
 type IR = [IRToken]
 
