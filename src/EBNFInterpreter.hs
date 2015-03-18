@@ -19,11 +19,11 @@ data IRTerminal = IRTermExclude
                 | IRTermIdentifier Text
                 | IRTermSpecial Text
                 | IRTermString Text
-                deriving (Show)
+                deriving (Eq, Show)
 
 data IRToken = IRTContainer ContainerType FormContent
              | IRTTerminal IRTerminal
-             deriving (Show)
+             deriving (Eq, Show)
 
 type IRAlternation = [IRToken]
 
