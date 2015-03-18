@@ -7,6 +7,7 @@ Maintainer  : carterhinsley@gmail.com
 -}
 module EBNFInterpreter where
 
+import Data.List.Split (endBy)
 import Data.Text (Text(..))
 import EBNFParser ( ContainerType(..)
                   , Terminal(..)
@@ -31,12 +32,16 @@ type IRContent = [IRAlternation]
 
 type IRForm = (Text, IRContent)
 
-type IR = [IRToken]
+type IR = [IRForm]
 
 separateForms :: AST -> [AST]
+separateForms ast@((TTerminal (TermIdentifier _)) : _) =
+    endBy [TTerminal TermEnd] ast
+separateForms (f:_) = error $ "Form " ++ show f ++ " is not an identifier."
+separateForms [] = error $ "AST must end with a TermEnd (end terminal) token."
 
-constructIRToken :: AST -> IRToken
+constructIRForm :: AST -> IRToken
 
 constructIR :: AST -> IR
-constructIR = map constructIRToken . separateForms
+constructIR = map constructIRForm . separateForms
 
