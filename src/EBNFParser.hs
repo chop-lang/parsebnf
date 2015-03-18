@@ -23,7 +23,7 @@ import qualified Data.Text
 data ContainerType = Group
                    | Option
                    | Repetition
-                   deriving (Show)
+                   deriving (Eq, Show)
 
 data Terminal = TermAlt
               | TermComma
@@ -35,11 +35,11 @@ data Terminal = TermAlt
               | TermIdentifier Text
               | TermSpecial Text
               | TermString Text
-              deriving (Show)
+              deriving (Eq, Show)
 
 data Token = TContainer ContainerType AST
            | TTerminal Terminal
-           deriving (Show)
+           deriving (Eq, Show)
 
 type AST = [Token]
 
