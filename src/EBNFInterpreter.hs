@@ -33,3 +33,10 @@ type IRToken = (Text, IRContent)
 
 type IR = [IRToken]
 
+separateForms :: AST -> [AST]
+
+constructIRToken :: AST -> IRToken
+
+constructIR :: AST -> IR
+constructIR = map constructIRToken . separateForms
+
