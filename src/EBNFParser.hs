@@ -17,7 +17,7 @@ module EBNFParser
 import Data.Char (isAlpha, isAlphaNum, isNumber, isSpace)
 import qualified Data.List as List (findIndex)
 import Data.Maybe (fromMaybe)
-import Data.Text hiding (drop, head, length, tail, takeWhile)
+import Data.Text (Text(..), pack, unpack, tails)
 import qualified Data.Text
 
 data ContainerType = Group
