@@ -21,7 +21,7 @@ data IRTerminal = IRTermExclude
                 | IRTermString Text
                 deriving (Eq, Show)
 
-data IRToken = IRTContainer ContainerType FormContent
+data IRToken = IRTContainer ContainerType IRContent
              | IRTTerminal IRTerminal
              deriving (Eq, Show)
 
