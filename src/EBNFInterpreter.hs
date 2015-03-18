@@ -13,21 +13,23 @@ import EBNFParser ( ContainerType(..)
                   , Token(..)
                   , AST )
 
-data FTerminal = FTermExclude
-               | FTermMultiple
-               | FTermNumber Text
-               | FTermIdentifier Text
-               | FTermSpecial Text
-               | FTermString Text
-               deriving (Show)
+data IRTerminal = IRTermExclude
+                | IRTermMultiple
+                | IRTermNumber Text
+                | IRTermIdentifier Text
+                | IRTermSpecial Text
+                | IRTermString Text
+                deriving (Show)
 
-data FToken = FTContainer ContainerType FormContent
-            | FTTerminal FTerminal
-            deriving (Show)
+data IRToken = IRTContainer ContainerType FormContent
+             | IRTTerminal IRTerminal
+             deriving (Show)
 
-type FAlternation = [FToken]
+type IRAlternation = [IRToken]
 
-type FormContent = [FAlternation]
+type IRContent = [IRAlternation]
 
-type IR = (Text, FormContent)
+type IRToken = (Text, IRContent)
+
+type IR = [IRToken]
 
