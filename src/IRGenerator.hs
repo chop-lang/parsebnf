@@ -40,7 +40,7 @@ separateForms ast@((TTerminal (TermIdentifier _)) : _) =
 separateForms (f:_) = error $ "Form " ++ show f ++ " is not an identifier."
 separateForms [] = error $ "AST must end with a TermEnd (end terminal) token."
 
-constructIRForm :: AST -> IRToken
+constructIRForm :: AST -> IRForm
 
 constructIR :: AST -> IR
 constructIR = map constructIRForm . separateForms
