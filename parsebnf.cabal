@@ -16,8 +16,8 @@ cabal-version:       >=1.10
 executable parsebnf
   main-is:             Main.hs
   other-modules:       CLI,
-                       EBNFInterpreter,
-                       EBNFParser
+                       EBNFParser,
+                       IRGenerator
   -- other-extensions:    
   build-depends:       base  ==4.7.*,
                        split ==0.2.*,

@@ -1,11 +1,11 @@
 {-|
-Module      : EBNFInterpreter
-Description : EBNF-AST-interpreting utilities
+Module      : IRGenerator
+Description : EBNF-AST-to-IR conversion
 Copyright   : (c) chop-lang, 2015
 License     : MIT
 Maintainer  : carterhinsley@gmail.com
 -}
-module EBNFInterpreter where
+module IRGenerator where
 
 import Data.List.Split (endBy)
 import Data.Text (Text(..))
