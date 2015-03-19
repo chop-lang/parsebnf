@@ -66,7 +66,6 @@ constructIRForm ( TTerminal (TermIdentifier termName)
                     IRTTerminal (IRTermSpecial x) : constructIRAlt xs
                 constructIRAlt (TTerminal (TermString x) : xs) =
                     IRTTerminal (IRTermString x) : constructIRAlt xs
-                    
 
 constructIR :: AST -> IR
 constructIR = map constructIRForm . separateForms
