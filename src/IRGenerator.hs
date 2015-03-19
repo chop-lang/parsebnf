@@ -52,20 +52,27 @@ constructIRForm ( TTerminal (TermIdentifier termName)
                 constructIRAlt (TContainer containerType ast : xs) =
                     ( IRTContainer containerType . constructIRContent $ ast )
                     : constructIRAlt xs
-                constructIRAlt (TTerminal TermComma : xs) =
-                    constructIRAlt xs
-                constructIRAlt (TTerminal TermExclude : xs) =
-                    IRTTerminal IRTermExclude : constructIRAlt xs
-                constructIRAlt (TTerminal TermMultiple : xs) =
-                    IRTTerminal IRTermMultiple : constructIRAlt xs
-                constructIRAlt (TTerminal (TermNumber x) : xs) =
-                    IRTTerminal (IRTermNumber x) : constructIRAlt xs
-                constructIRAlt (TTerminal (TermIdentifier x) : xs) =
-                    IRTTerminal (IRTermIdentifier x) : constructIRAlt xs
-                constructIRAlt (TTerminal (TermSpecial x) : xs) =
-                    IRTTerminal (IRTermSpecial x) : constructIRAlt xs
-                constructIRAlt (TTerminal (TermString x) : xs) =
-                    IRTTerminal (IRTermString x) : constructIRAlt xs
+                constructIRAlt (TTerminal terminal : xs) = 
+                    if terminal == TermComma
+                        then constructIRAlt xs
+                        else (case terminal of
+                                  TermExclude      ->
+                                      IRTTerminal   IRTermExclude
+                                  TermMultiple     ->
+                                      IRTTerminal   IRTermMultiple
+                                  TermNumber     x ->
+                                      IRTTerminal . IRTermNumber
+                                                  $ x
+                                  TermIdentifier x ->
+                                      IRTTerminal . IRTermIdentifier
+                                                  $ x
+                                  TermSpecial    x ->
+                                      IRTTerminal . IRTermSpecial
+                                                  $ x
+                                  TermString     x ->
+                                      IRTTerminal . IRTermString
+                                                  $ x
+                        ) : constructIRAlt xs
 
 constructIR :: AST -> IR
 constructIR = map constructIRForm . separateForms
