@@ -17,6 +17,7 @@ executable parsebnf
   main-is:             Main.hs
   other-modules:       CLI,
                        EBNFParser,
+                       IREvaluator,
                        IRGenerator
   -- other-extensions:    
   build-depends:       base  ==4.7.*,
