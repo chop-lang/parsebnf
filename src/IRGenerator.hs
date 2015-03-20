@@ -17,8 +17,8 @@ import EBNFParser ( ContainerType(..)
 -- | An EBNF form IR terminal.
 data IRTerminal = IRTermExclude
                 | IRTermMultiple
-                | IRTermNumber Text
                 | IRTermIdentifier Text
+                | IRTermNumber Text
                 | IRTermSpecial Text
                 | IRTermString Text
                 deriving (Eq, Show)
@@ -72,11 +72,11 @@ constructIRForm ( TTerminal (TermIdentifier termName)
                                       IRTTerminal   IRTermExclude
                                   TermMultiple     ->
                                       IRTTerminal   IRTermMultiple
-                                  TermNumber     x ->
-                                      IRTTerminal . IRTermNumber
-                                                  $ x
                                   TermIdentifier x ->
                                       IRTTerminal . IRTermIdentifier
+                                                  $ x
+                                  TermNumber     x ->
+                                      IRTTerminal . IRTermNumber
                                                   $ x
                                   TermSpecial    x ->
                                       IRTTerminal . IRTermSpecial
