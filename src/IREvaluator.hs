@@ -15,11 +15,9 @@ import IRGenerator ( IRTerminal(..)
                    , IRForm
                    , IR )
 
-type PContainerType = Text
+ype PTerminal = (Text, Text)
 
-type PTerminal = (Text, Text)
-
-data PToken = PTContainer PContainerType PAST
+data PToken = PTContainer PAST
             | PTTerminal PTerminal
             deriving (Eq, Show)
 
