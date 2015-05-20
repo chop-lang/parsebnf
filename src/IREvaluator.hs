@@ -15,11 +15,26 @@ import IRGenerator ( IRTerminal(..)
                    , IRForm
                    , IR )
 
-ype PTerminal = (Text, Text)
+data EToken = ETContainer EContent
+            | ETTerminal ETerminal
+            deriving (Eq, Show)
 
+type EAlternation = [EToken]
+
+type EContent = [EAlternation]
+ 
+type EForm = (Text, EContent)
+
+-- | A product AST terminal, its first element being a descriptor of the
+-- terminal and its second element being the terminal content.
+type PTerminal = (Text, Text)
+
+-- | A product AST token, either containing another product AST or comprising
+-- a PTerminal.
 data PToken = PTContainer PAST
             | PTTerminal PTerminal
             deriving (Eq, Show)
 
-type PAST = [PForm]
+-- | The final product AST of the parsing process.
+type PAST = [PToken]
 
