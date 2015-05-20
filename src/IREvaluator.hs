@@ -38,3 +38,6 @@ data PToken = PTContainer PAST
 -- | The final product AST of the parsing process.
 type PAST = [PToken]
 
+-- | Accept an EBNF IR and some source text and product a product AST.
+evaluate :: IR -> Text -> PAST
+
