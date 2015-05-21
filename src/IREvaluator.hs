@@ -25,6 +25,8 @@ type EContent = [EAlternation]
  
 type EForm = (Text, EContent)
 
+type ER = [EForm]
+
 -- | A product AST terminal, its first element being a descriptor of the
 -- terminal and its second element being the terminal content.
 type PTerminal = (Text, Text)
