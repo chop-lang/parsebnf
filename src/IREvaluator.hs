@@ -43,3 +43,6 @@ type PAST = [PToken]
 -- | Accept an EBNF IR and some source text and product a product AST.
 evaluate :: IR -> Text -> PAST
 
+-- | Accept an EBNF IR and produce an evaluator representation.
+createEvaluator :: IR -> ER
+
