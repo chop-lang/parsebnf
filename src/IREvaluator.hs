@@ -5,7 +5,13 @@ Copyright   : (c) chop-lang, 2015
 License     : MIT
 Maintainer  : carterhinsley@gmail.com
 -}
-module IREvaluator where
+module IREvaluator 
+( PTerminal
+, PToken(..)
+, PAST
+, evaluate
+, createEvaluator
+) where
 
 import Data.Text (Text(..))
 import IRGenerator ( IRTerminal(..)
