@@ -28,10 +28,7 @@ processArgs = do
 -- the arguments.
 evalArgs :: [String] -> [ArgResult]
 evalArgs [filePath] =
-    [ ParseData { ebnfFile = readFile filePath
-                , input = getContents
-                }
-    ]
+    [ ParseData { ebnfFile = readFile filePath, input = getContents } ]
 evalArgs (x:_) = error $ "Argument `" ++ x ++ "' unrecognized. Please RTFM."
 evalArgs _ = error "Invalid arguments. Please RTFM."
 
