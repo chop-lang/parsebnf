@@ -13,9 +13,7 @@ module CLI
 import System.Environment (getArgs)
 
 -- | Contains data gathered from command-line arguments
-data ArgResult = ParseData { ebnfFile :: IO String
-                           , input :: IO String
-                           }
+data ArgResult = ParseData { ebnfFile :: IO String, input :: IO String }
 
 -- | Retrieve command-line arguments, evaluate them, then wrap them back up in
 -- the IO monad.
